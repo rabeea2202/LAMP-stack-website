@@ -92,10 +92,6 @@ This project is a simple web application built using the LAMP stack (Linux, Apac
 
 If you wish to contribute to this project, please fork the repository and submit a pull request with your changes. Ensure that any modifications adhere to the project's coding standards and include appropriate documentation.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgements
 
 - XAMPP for local development.

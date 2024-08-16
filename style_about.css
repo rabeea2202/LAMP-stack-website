@@ -1,0 +1,106 @@
+
+body {
+    margin: 0;
+    
+    font-family: Arial, sans-serif;
+}
+header{
+    background-color: #244855;
+    height: 120px;
+    color: white;
+    display: flex;
+    align-items: center;
+    
+    
+}
+#header{
+    display: flex;
+    align-items: center;
+}
+
+#header img{
+    margin-left: 10px;
+  
+    border-radius: 100px;
+}
+
+#header h3{
+    margin-left: 25px;
+    font-family: Poppins;
+    font-size: large;
+    
+}
+.navbar ul{
+    list-style-type: none;
+    background-color: #E64833;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+ .navbar a{
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+ }
+
+ .navbar li{
+    float: left;
+ }
+
+ .navbar a:hover{
+    background-color: #C5C6C7;
+ }
+
+ h1 {
+    font-size: 2.5em; /* Larger font size for prominence */
+    color: #333; /* Dark gray color for the text */
+    text-align: center; /* Center align the text */
+    margin-bottom: 20px; /* Space below the heading */
+    font-weight: 700; /* Bold text for emphasis */
+}
+
+/* Styling for p tag */
+.p1 {
+    font-size: 1.2em; /* Slightly larger font size for readability */
+    color: #555; /* Medium gray color for a softer look */
+    line-height: 1.6; /* Increased line height for better readability */
+    text-align: center; /* Center align the text */
+    width: 800px; /* Restrict the width for readability */
+    margin: 0 auto; /* Center the paragraph with auto margins */
+    padding: 0 20px; /* Padding on left and right for better spacing */
+}
+.about_image {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the image horizontally */
+     /* Space above and below the image container */
+}
+
+/* Styling for the image itself */
+.about_image img {
+    width: 300px; /* Ensure the image scales within its container */
+    height: auto; /* Maintain aspect ratio */
+    
+}
+footer {
+    background-color: #244855;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    bottom: -58px;
+    width: 100%;
+    
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 1em;
+}

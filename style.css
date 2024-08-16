@@ -1,0 +1,218 @@
+
+body {
+    background-color:white;
+    font-family: Arial, sans-serif;
+    position: relative;
+    margin: 0;
+}
+
+#intro {
+    position: relative;
+    height: 75.4vh;
+    background-image: url('images/home.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+#intro .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+#intro h1, #intro p ,#intro button{
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    
+}
+
+#intro h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px; /* Adds space between the h1 and p */
+    color: rgb(231, 231, 231);
+}
+
+#intro p {
+    font-size: 1.5em;
+    color: rgb(231, 231, 231);
+}
+
+#intro button {
+    background-color: white;
+    color: black;
+    border: none; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 2em; /* Font size */
+    cursor: pointer; 
+    margin-top: 20px;
+}
+
+#intro button:hover {
+    background-color: white; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+#intro button:active {
+    background-color: white; /* Even darker blue when the button is pressed */
+    transform: scale(1); /* Return to original size when pressed */
+}
+
+
+header{
+    background-color: #244855;
+    height: 120px;
+    color: white;
+    display: flex;
+    align-items: center;
+    
+    
+}
+
+
+#header{
+    display: flex;
+    align-items: center;
+}
+
+#header img{
+    margin-left: 10px;
+  
+    border-radius: 100px;
+}
+
+#header h3{
+    margin-left: 25px;
+    font-family: Poppins;
+    font-size: large;
+    
+}
+
+.navbar ul{
+    list-style-type: none;
+    background-color: #E64833;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+ .navbar a{
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+ }
+
+ .navbar li{
+    float: left;
+ }
+
+ .navbar a:hover{
+    background-color: #C5C6C7;
+ }
+
+ 
+
+ 
+ .form-popup {
+    display: none;
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); /* Offset the element's position */
+    width: 100%; /* Adjust width as needed */
+    max-width: 600px; /* Maximum width for larger screens */
+    z-index: 5 
+}
+ /* Add styles to the form container */
+ .form-container {
+    
+   width: 100%;
+   padding: 10px;
+   background-color: rgb(202, 202, 202);
+   border: 1px solid black;
+   border-radius: 20px;
+ }
+ 
+ /* Full-width input fields */
+ .form-container input[type=text], .form-container input[type=password] {
+   width: 90%;
+   padding: 15px;
+   margin: 5px 0 22px 0;
+   border: none;
+   background: #dfdfdf;
+ }
+ 
+ .form-container textarea {
+    width: 90%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #dfdfdf;
+    
+    margin-bottom: 16px;
+}
+
+form textarea {
+    resize: none;
+    max-height: 200px;
+}
+
+ 
+ 
+ .form-container .btn {
+   background-color: #244855;
+   color: white;
+   padding: 16px 20px;
+   border: none;
+   cursor: pointer;
+   width: 100%;
+   margin-bottom:10px;
+   opacity: 0.8;
+   border-radius: 20px;
+ }
+ 
+ 
+ .form-container .cancel {
+   background-color: #E64833;
+ }
+ 
+ 
+ .form-container .btn:hover, .open-button:hover {
+   opacity: 1;
+ }
+
+ 
+ 
+footer {
+    background-color: #244855;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 1em;
+}

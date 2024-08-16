@@ -1,5 +1,4 @@
 <?php
-    include("header.html");
     include("database.php");
 ?>
 
@@ -10,13 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SneakerPulse</title>
     
-    <link rel="stylesheet" href="style_gallery.css">
+    <link rel="stylesheet" href="css/style_gallery.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <header>
+        <div id="header">
+            <img src="images/Sneaker-logo.jpg" width="100px" height="100px" alt="SneakerPuluse Logo">
+            <h3> Step Up Your Game, One Sneaker at a Time</h3>
+        </div>
+    </header>
     <nav class="navbar">
         <ul>
         <li><a href="index.php">Home</a></li>
@@ -31,12 +35,12 @@
         <p>Explore our collection of sneakers from various brands and styles</p>
         <div class="gallery-grid">
         <?php
-                // Fetch images from the database
+               
                 $sql = "SELECT image, name, sname, comment FROM sneakers";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
-                    // Output data for each row
+        
                     while($row = mysqli_fetch_assoc($result)) {
                         echo '<div class="gallery-item">';
                         echo '<img src="uploads/' . $row['image'] . '" alt="' . htmlspecialchars($row['sname']) . '">';
@@ -57,9 +61,11 @@
             ?>
         </div>
     </div>
-    
+    <footer>
+    <div class="footer-content">
+        <p>&copy; 2024 SneakerPulse. All rights reserved.</p>        
+    </div>
+    </footer>
+
 </body>
 </html>
-<?php
-    include("footer.html")
-?>

@@ -1,7 +1,3 @@
-<?php
-    include("header.html")
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SneakerPulse</title>
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <header>
+        <div id="header">
+            <img src="images/Sneaker-logo.jpg" width="100px" height="100px" alt="SneakerPuluse Logo">
+            <h3> Step Up Your Game, One Sneaker at a Time</h3>
+        </div>
+    </header>
+        
     
     <nav class="navbar">
         <ul>
@@ -64,12 +66,16 @@
             document.getElementById("myForm").style.display = "none";
         }
     </script>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 SneakerPulse. All rights reserved.</p>        
+        </div>
+    </footer>
 
 </body>
 </html>
 
 <?php
-    include("footer.html");
     include("database.php");
     
 

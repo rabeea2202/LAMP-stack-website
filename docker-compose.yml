@@ -3,7 +3,6 @@ version: "3.8"
 services:
   web:
     build: .
-    container_name: lamp_web
     ports:
       - "3000:80"
     depends_on:
@@ -13,13 +12,12 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: lamp_db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydb
-
     volumes:
       - db_data:/var/lib/mysql
 
 volumes:
   db_data:
+

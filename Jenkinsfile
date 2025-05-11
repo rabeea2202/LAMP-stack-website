@@ -1,17 +1,9 @@
 pipeline {
     agent any
-
     environment {
         COMPOSE_PROJECT_NAME = 'jenkinslamp'
     }
-
     stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/rabeea2202/LAMP-stack-website.git'
-            }
-        }
-
         stage('Build and Deploy') {
             steps {
                 script {

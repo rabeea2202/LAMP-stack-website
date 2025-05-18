@@ -9,15 +9,19 @@ services:
       - db
     volumes:
       - .:/var/www/html
+    environment:
+      APACHE_RUN_USER: www-data
+      APACHE_RUN_GROUP: www-data
 
   db:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
     volumes:
       - db_data:/var/lib/mysql
 
 volumes:
   db_data:
-

@@ -108,7 +108,6 @@
 
                 // Execute the query
                 if (mysqli_query($conn, $sql)) {
-                    // Redirect to a new page after successful insertion
                     header("Location: index.php");
                     exit();
                 } else {

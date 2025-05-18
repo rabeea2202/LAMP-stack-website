@@ -114,6 +114,7 @@
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
             } else {
+                //upload right format of image
                 echo "Failed to upload image.";
             }
         }

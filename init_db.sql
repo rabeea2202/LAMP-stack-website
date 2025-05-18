@@ -4,7 +4,7 @@ CREATE TABLE sneakers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   image VARCHAR(255),
   name VARCHAR(100),
-  sname VARCHAR(100), 
-  brand VARCHAR(100),
-  price DECIMAL(10,2)
+  sname VARCHAR(100),
+  comment TEXT
 );
+

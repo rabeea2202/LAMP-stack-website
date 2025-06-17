@@ -1,34 +1,46 @@
 pipeline {
   agent any
+
   environment {
     COMPOSE_PROJECT_NAME = 'jenkinslamp'
   }
+
   stages {
-    stage('Clean up') {
-      steps {
-        script {
-          // Stop containers and remove orphans, keep volumes
-          sh 'docker-compose -p jenkinslamp -f docker-compose.yml down --remove-orphans || true'
-        }
-      }
-    }
     stage('Build and Deploy') {
       steps {
-        script {
-          sh 'docker-compose -p jenkinslamp -f docker-compose.yml up -d --build'
-        }
+        sh 'docker-compose -p jenkinslamp -f docker-compose.yml up -d --build'
       }
     }
-    stage('Initialize DB') {
+
+    stage('Run Tests') {
       steps {
-        script {
-          // Wait a few seconds for DB to be ready, optional but recommended
-          sh 'sleep 10'
-          sh '''
-            DB_CONTAINER=$(docker-compose -p jenkinslamp -f docker-compose.yml ps -q db)
-            docker exec -i $DB_CONTAINER mysql -u user -puserpassword mydb < init_db.sql
-          '''
-        }
+        sh 'rm -rf lamp-website-tests'
+        sh 'git clone https://github.com/rabeea2202/lamp-website-tests.git'
+        sh 'chmod +x lamp-website-tests/test_main.sh'
+        sh './lamp-website-tests/test_main.sh'
+      }
+    }
+  }
+
+  post {
+    success {
+      script {
+        def committer = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+        emailext (
+          subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+          body: "Good news! Your recent push passed all tests.\n\nView: ${env.BUILD_URL}",
+          to: "${committer}"
+        )
+      }
+    }
+    failure {
+      script {
+        def committer = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+        emailext (
+          subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+          body: "Unfortunately, your recent push failed tests. Please check the logs:\n\n${env.BUILD_URL}",
+          to: "${committer}"
+        )
       }
     }
   }

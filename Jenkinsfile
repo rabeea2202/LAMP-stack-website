@@ -43,8 +43,8 @@ pipeline {
             exit 1
           fi
 
-          echo "[INFO] Installing Selenium globally (if not installed)..."
-          pip3 show selenium || pip3 install selenium
+          echo "[INFO] Installing Selenium globally using override..."
+          pip3 install selenium --break-system-packages
 
           echo "[INFO] Running test script..."
           python3 lamp-website-tests/selenium_test_suite.py

@@ -43,16 +43,11 @@ pipeline {
             exit 1
           fi
 
-          echo "[INFO] Creating Python virtual environment..."
-          python3 -m venv venv
-          source venv/bin/activate
-
-          echo "[INFO] Installing Selenium in virtual environment..."
-          venv/bin/pip install --upgrade pip
-          venv/bin/pip install selenium
+          echo "[INFO] Installing Selenium globally (if not installed)..."
+          pip3 show selenium || pip3 install selenium
 
           echo "[INFO] Running test script..."
-          venv/bin/python lamp-website-tests/selenium_test_suite.py
+          python3 lamp-website-tests/selenium_test_suite.py
         '''
       }
     }
@@ -79,7 +74,7 @@ pipeline {
           subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your push passed all tests! 
+Your push passed all tests!
 
 View Build: ${env.BUILD_URL}
 """,
@@ -108,7 +103,7 @@ View Build: ${env.BUILD_URL}
           subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your recent push failed the tests. 
+Your recent push failed the tests.
 
 Please check the Jenkins logs and resolve the issue.
 

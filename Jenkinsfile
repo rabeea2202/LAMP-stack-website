@@ -7,10 +7,12 @@ pipeline {
 
   stages {
     stage('Build and Deploy') {
-      steps {
-        sh 'docker-compose -p jenkinslamp -f docker-compose.yml up -d --build'
-      }
-    }
+  steps {
+    sh 'docker-compose -p jenkinslamp -f docker-compose.yml down --volumes --remove-orphans'
+    sh 'docker-compose -p jenkinslamp -f docker-compose.yml up -d --build --force-recreate'
+  }
+}
+
 
     stage('Run Tests') {
       steps {

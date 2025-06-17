@@ -26,19 +26,46 @@ pipeline {
     success {
       script {
         def committer = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+
+        // Fallback if email is GitHub noreply
+        if (committer.contains("noreply.github.com")) {
+          committer = "your-team-email@example.com"
+        }
+
+        echo "Sending success email to: ${committer}"
+
         emailext (
           subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-          body: "Good news! Your recent push passed all tests.\n\nView: ${env.BUILD_URL}",
+          body: """Good news!
+
+Your recent push passed all tests.
+
+🔗 View Build: ${env.BUILD_URL}
+""",
           to: "${committer}"
         )
       }
     }
+
     failure {
       script {
         def committer = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+
+        // Fallback if email is GitHub noreply
+        if (committer.contains("noreply.github.com")) {
+          committer = "your-team-email@example.com"
+        }
+
+        echo "Sending failure email to: ${committer}"
+
         emailext (
           subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-          body: "Unfortunately, your recent push failed tests. Please check the logs:\n\n${env.BUILD_URL}",
+          body: """Oops! Your recent push failed the tests.
+
+Please review the logs and fix the issues.
+
+🔗 View Build: ${env.BUILD_URL}
+""",
           to: "${committer}"
         )
       }

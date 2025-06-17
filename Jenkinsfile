@@ -7,11 +7,11 @@ pipeline {
 
   stages {
     stage('Build and Deploy') {
-  steps {
-    sh 'docker-compose -p jenkinslamp -f docker-compose.yml down --volumes --remove-orphans'
-    sh 'docker-compose -p jenkinslamp -f docker-compose.yml up -d --build --force-recreate'
-  }
-}
+      steps {
+        sh 'docker-compose -p jenkinslamp -f docker-compose.yml down --volumes --remove-orphans'
+        sh 'docker-compose -p jenkinslamp -f docker-compose.yml up -d --build --force-recreate'
+      }
+    }
 
 
     stage('Run Tests') {
@@ -63,7 +63,7 @@ View Build: ${env.BUILD_URL}
 
         def emailMap = [
           'rabeea2202' : 'rabeeachughtai1@gmail.com',
-          'qasimalik'  : 'qasimalik@gmail.com'
+          'malik-qasim'  : 'qasimalik@gmail.com'
         ]
 
         if (committerEmail.contains("noreply.github.com")) {

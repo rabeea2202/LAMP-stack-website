@@ -24,9 +24,11 @@ pipeline {
       steps {
         sh 'rm -rf lamp-website-tests'
         sh 'git clone https://github.com/rabeea2202/lamp-website-tests.git'
-        sh 'chmod +x lamp-website-tests/test_main.sh'
-        sh './lamp-website-tests/test_main.sh'
+        sh 'pip3 install selenium'
+        sh 'sudo apt-get install -y chromium-chromedriver'
+        sh 'python3 lamp-website-tests/selenium_test_suite.py'
       }
+    }
     }
   }
 

@@ -22,11 +22,31 @@ pipeline {
 
     stage('Run Tests') {
       steps {
-        sh 'rm -rf lamp-website-tests'
-        sh 'git clone https://github.com/rabeea2202/lamp-website-tests.git'
-        sh 'pip3 install selenium'
-        sh 'sudo apt-get install -y chromium-chromedriver'
-        sh 'python3 lamp-website-tests/selenium_test_suite.py'
+        sh '''
+          # Clean previous test clone
+          rm -rf lamp-website-tests
+
+          # Clone your test repo
+          git clone https://github.com/rabeea2202/lamp-website-tests.git
+
+          # Install Python3 and pip3 if not already installed
+          if ! command -v python3 >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y python3
+          fi
+
+          if ! command -v pip3 >/dev/null 2>&1; then
+            sudo apt-get install -y python3-pip
+          fi
+
+          # Install selenium and Chromium dependencies
+          pip3 install selenium
+          sudo apt-get install -y chromium-chromedriver
+          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver || true
+
+          # Run Selenium test
+          python3 lamp-website-tests/selenium_test_suite.py
+        '''
       }
     }
   }

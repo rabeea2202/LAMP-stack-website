@@ -16,7 +16,7 @@ pipeline {
     stage('Wait for DB') {
       steps {
         echo 'Waiting for MySQL to initialize...'
-        sh 'sleep 20' 
+        sh 'sleep 20'
       }
     }
 
@@ -28,7 +28,6 @@ pipeline {
         sh 'sudo apt-get install -y chromium-chromedriver'
         sh 'python3 lamp-website-tests/selenium_test_suite.py'
       }
-    }
     }
   }
 
@@ -53,7 +52,7 @@ pipeline {
           subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your push passed all tests! 
+Your push passed all tests!
 
 View Build: ${env.BUILD_URL}
 """,

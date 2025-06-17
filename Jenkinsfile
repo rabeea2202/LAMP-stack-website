@@ -13,6 +13,12 @@ pipeline {
       }
     }
 
+    stage('Wait for DB') {
+      steps {
+        echo 'Waiting for MySQL to initialize...'
+        sh 'sleep 20' 
+      }
+    }
 
     stage('Run Tests') {
       steps {
@@ -27,16 +33,14 @@ pipeline {
   post {
     success {
       script {
-        def committerEmail = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
-        def gitAuthor = sh(script: "git log -1 --pretty=format:'%an'", returnStdout: true).trim()
+        def committerEmail = sh(script: "git log -1 --pretty=format:%ae", returnStdout: true).trim()
+        def gitAuthor = sh(script: "git log -1 --pretty=format:%an", returnStdout: true).trim()
 
-        // Map GitHub usernames to real emails
         def emailMap = [
-          'rabeea2202' : 'rabeeachughtai1@gmail.com',
+          'rabeea2202'   : 'rabeeachughtai1@gmail.com',
           'malik-qasim'  : 'qasimalik@gmail.com'
         ]
 
-        // Fallback if GitHub hides email
         if (committerEmail.contains("noreply.github.com")) {
           committerEmail = emailMap.get(gitAuthor, "fallback-team-email@example.com")
         }
@@ -44,10 +48,10 @@ pipeline {
         echo "Sending success email to: ${committerEmail}"
 
         emailext (
-          subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+          subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your push passed all tests!
+Your push passed all tests! 
 
 View Build: ${env.BUILD_URL}
 """,
@@ -58,11 +62,11 @@ View Build: ${env.BUILD_URL}
 
     failure {
       script {
-        def committerEmail = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
-        def gitAuthor = sh(script: "git log -1 --pretty=format:'%an'", returnStdout: true).trim()
+        def committerEmail = sh(script: "git log -1 --pretty=format:%ae", returnStdout: true).trim()
+        def gitAuthor = sh(script: "git log -1 --pretty=format:%an", returnStdout: true).trim()
 
         def emailMap = [
-          'rabeea2202' : 'rabeeachughtai1@gmail.com',
+          'rabeea2202'   : 'rabeeachughtai1@gmail.com',
           'malik-qasim'  : 'qasimalik@gmail.com'
         ]
 
@@ -76,9 +80,7 @@ View Build: ${env.BUILD_URL}
           subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your recent push failed the tests.
-
-Please review the logs and fix the issues.
+Your recent push failed the tests. Please check the logs and fix the issue.
 
 View Build: ${env.BUILD_URL}
 """,

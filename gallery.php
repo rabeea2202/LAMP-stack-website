@@ -54,6 +54,7 @@
                         echo '</div>';
                     }
                 } else {
+                    // no image
                     echo "<p>No images to display</p>";
                 }
 

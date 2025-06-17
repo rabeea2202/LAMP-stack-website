@@ -23,34 +23,36 @@ pipeline {
     stage('Run Tests') {
       steps {
         sh '''
-          # Clean previous test clone
+          echo "[INFO] Cleaning previous test repo..."
           rm -rf lamp-website-tests
 
-          # Clone test repo
+          echo "[INFO] Cloning test repo..."
           git clone https://github.com/rabeea2202/lamp-website-tests.git
 
-          # Check if python3 and pip3 are installed
+          echo "[INFO] Checking required tools..."
           if ! command -v python3 >/dev/null 2>&1; then
-            echo "Error: python3 not found. Please install it on Jenkins agent." >&2
+            echo "Error: python3 not found." >&2
             exit 1
           fi
-
           if ! command -v pip3 >/dev/null 2>&1; then
-            echo "Error: pip3 not found. Please install it on Jenkins agent." >&2
+            echo "Error: pip3 not found." >&2
             exit 1
           fi
-
-          # Check if chromedriver is installed
           if ! command -v chromedriver >/dev/null 2>&1; then
-            echo "Error: chromedriver not found. Please install it on Jenkins agent." >&2
+            echo "Error: chromedriver not found." >&2
             exit 1
           fi
 
-          # Install selenium if not already
-          pip3 show selenium || pip3 install selenium
+          echo "[INFO] Creating Python virtual environment..."
+          python3 -m venv venv
+          source venv/bin/activate
 
-          # Run the Selenium test
-          python3 lamp-website-tests/selenium_test_suite.py
+          echo "[INFO] Installing Selenium in virtual environment..."
+          venv/bin/pip install --upgrade pip
+          venv/bin/pip install selenium
+
+          echo "[INFO] Running test script..."
+          venv/bin/python lamp-website-tests/selenium_test_suite.py
         '''
       }
     }
@@ -77,7 +79,7 @@ pipeline {
           subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your push passed all tests!
+Your push passed all tests! 
 
 View Build: ${env.BUILD_URL}
 """,
@@ -106,7 +108,9 @@ View Build: ${env.BUILD_URL}
           subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
           body: """Hi ${gitAuthor},
 
-Your recent push failed the tests. Please check the logs and fix the issue.
+Your recent push failed the tests. 
+
+Please check the Jenkins logs and resolve the issue.
 
 View Build: ${env.BUILD_URL}
 """,

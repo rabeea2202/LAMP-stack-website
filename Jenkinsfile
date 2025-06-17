@@ -26,25 +26,30 @@ pipeline {
           # Clean previous test clone
           rm -rf lamp-website-tests
 
-          # Clone your test repo
+          # Clone test repo
           git clone https://github.com/rabeea2202/lamp-website-tests.git
 
-          # Install Python3 and pip3 if not already installed
+          # Check if python3 and pip3 are installed
           if ! command -v python3 >/dev/null 2>&1; then
-            sudo apt-get update
-            sudo apt-get install -y python3
+            echo "Error: python3 not found. Please install it on Jenkins agent." >&2
+            exit 1
           fi
 
           if ! command -v pip3 >/dev/null 2>&1; then
-            sudo apt-get install -y python3-pip
+            echo "Error: pip3 not found. Please install it on Jenkins agent." >&2
+            exit 1
           fi
 
-          # Install selenium and Chromium dependencies
-          pip3 install selenium
-          sudo apt-get install -y chromium-chromedriver
-          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver || true
+          # Check if chromedriver is installed
+          if ! command -v chromedriver >/dev/null 2>&1; then
+            echo "Error: chromedriver not found. Please install it on Jenkins agent." >&2
+            exit 1
+          fi
 
-          # Run Selenium test
+          # Install selenium if not already
+          pip3 show selenium || pip3 install selenium
+
+          # Run the Selenium test
           python3 lamp-website-tests/selenium_test_suite.py
         '''
       }

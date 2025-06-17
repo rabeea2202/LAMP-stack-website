@@ -25,48 +25,62 @@ pipeline {
   post {
     success {
       script {
-        def committer = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+        def committerEmail = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+        def gitAuthor = sh(script: "git log -1 --pretty=format:'%an'", returnStdout: true).trim()
 
-        // Fallback if email is GitHub noreply
-        if (committer.contains("noreply.github.com")) {
-          committer = "your-team-email@example.com"
+        // Map GitHub usernames to real emails
+        def emailMap = [
+          'rabeea2202' : 'rabeeachughtai1@gmail.com',
+          'malik-qasim'  : 'qasimalik@gmail.com'
+        ]
+
+        // Fallback if GitHub hides email
+        if (committerEmail.contains("noreply.github.com")) {
+          committerEmail = emailMap.get(gitAuthor, "fallback-team-email@example.com")
         }
 
-        echo "Sending success email to: ${committer}"
+        echo "Sending success email to: ${committerEmail}"
 
         emailext (
           subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-          body: """Good news!
+          body: """Hi ${gitAuthor},
 
-Your recent push passed all tests.
+Your push passed all tests!
 
-🔗 View Build: ${env.BUILD_URL}
+View Build: ${env.BUILD_URL}
 """,
-          to: "${committer}"
+          to: "${committerEmail}"
         )
       }
     }
 
     failure {
       script {
-        def committer = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+        def committerEmail = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+        def gitAuthor = sh(script: "git log -1 --pretty=format:'%an'", returnStdout: true).trim()
 
-        // Fallback if email is GitHub noreply
-        if (committer.contains("noreply.github.com")) {
-          committer = "your-team-email@example.com"
+        def emailMap = [
+          'rabeea2202' : 'rabeeachughtai1@gmail.com',
+          'qasimalik'  : 'qasimalik@gmail.com'
+        ]
+
+        if (committerEmail.contains("noreply.github.com")) {
+          committerEmail = emailMap.get(gitAuthor, "fallback-team-email@example.com")
         }
 
-        echo "Sending failure email to: ${committer}"
+        echo "Sending failure email to: ${committerEmail}"
 
         emailext (
           subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-          body: """Oops! Your recent push failed the tests.
+          body: """Hi ${gitAuthor},
+
+Your recent push failed the tests.
 
 Please review the logs and fix the issues.
 
-🔗 View Build: ${env.BUILD_URL}
+View Build: ${env.BUILD_URL}
 """,
-          to: "${committer}"
+          to: "${committerEmail}"
         )
       }
     }

@@ -115,7 +115,6 @@
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
             } else {
-                // no image found
                 echo "Failed to upload image.";
             }
         }
